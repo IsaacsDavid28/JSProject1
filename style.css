@@ -111,7 +111,7 @@ input{
 
 /* DESKTOP VIEW */
 
-@media screen and (min-width:481px) and (max-width: 1300px){
+@media screen and (min-width:481px) {
 
 
     button{
@@ -216,5 +216,5 @@ input{
 
 }
 
-}
+
 
