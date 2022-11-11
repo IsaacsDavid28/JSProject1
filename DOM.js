@@ -47,3 +47,14 @@ function timer() {
 function returnData(input) {
   return input >= 10 ? input : `0${input}`
 }
+
+//Flip function//
+
+const card = document.querySelector(".card-1");
+
+card.addEventListener('click', flipCard);
+
+function flipCard() {
+  card.classList.toggle("flipCard")
+}
+
