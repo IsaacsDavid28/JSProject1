@@ -47,3 +47,4 @@ function timer() {
 function returnData(input) {
   return input >= 10 ? input : `0${input}`
 }
+
