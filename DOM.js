@@ -50,11 +50,18 @@ function returnData(input) {
 
 //Flip function//
 
-const card = document.querySelector(".card-1");
+// const card = document.querySelector(".card");
 
-card.addEventListener('click', flipCard);
+// card.addEventListener('click', flipCard);
 
-function flipCard() {
-  card.classList.toggle("flipCard")
+// function flipCard() {
+//   card.classList.toggle("flipCard")
+// }
+
+let startGame = document.querySelector('#start')
+let board = document.getElementsByClassName('board')
+startGame.addEventListener('click', randomize);
+
+function randomize() {
+
 }
-
