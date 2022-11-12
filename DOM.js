@@ -7,10 +7,10 @@ let millisecond = 0;
 
 let cron;
 
-document.form_main.start.onclick = () => start();
+document.form_main.start.onclick = () => begin();
 document.form_main.reset.onclick = () => reset();
 
-function start() {
+function begin() {
   cron = setInterval(() => { timer(); }, 10);
 }
 
@@ -59,3 +59,26 @@ function flipCard() {
   
 }
 
+const board = document.querySelectorAll('.cards')
+
+const startButton = document.querySelector('#start')
+
+const startGame = document.addEventListener('click', randomize);
+
+const resetButton = document.querySelector('#reset')
+
+const resetGame = document.addEventListener('click', resetRandomize);
+
+function randomize() {
+  board.forEach(c => {
+    let r = Math.floor(Math.random() * 16);
+    c.style.order = r;
+})
+}
+
+function resetRandomize() {
+  board.forEach(c => {
+    let r = Math.floor(Math.random() * 16);
+    c.style.order = r;
+})
+}
