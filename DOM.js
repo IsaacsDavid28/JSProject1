@@ -63,11 +63,11 @@ const board = document.querySelectorAll('.cards')
 
 const startButton = document.querySelector('#start')
 
-const startGame = document.addEventListener('click', randomize);
+const startGame = startButton.addEventListener('click', randomize);
 
 const resetButton = document.querySelector('#reset')
 
-const resetGame = document.addEventListener('click', resetRandomize);
+const resetGame = resetButton.addEventListener('click', resetRandomize);
 
 function randomize() {
   board.forEach(c => {
