@@ -50,20 +50,19 @@ function returnData(input) {
 
 //Flip function//
 
-const card = document.querySelector(".card-1");
-
-card.addEventListener('click', flipCard);
-
-function flipCard() {
-  card.classList.toggle("flipCard")
-  
-}
+//const card = document.querySelector(".cards");
 
 const board = document.querySelectorAll('.cards')
 
+board.forEach(card => card.addEventListener('click', flipCard));
+
+function flipCard() {
+  this.classList.toggle("flipCard")
+}
+
 const startButton = document.querySelector('#start')
 
-const startGame = startButton.addEventListener('click', randomize);
+const startGame = startButton.addEventListener('click', randomize,{once:true});
 
 const resetButton = document.querySelector('#reset')
 
