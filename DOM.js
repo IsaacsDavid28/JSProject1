@@ -53,33 +53,30 @@ let secondCard;
 let correct = true;
 let counter = 1;
 
-const board = document.querySelector('.board')
+const cards = document.querySelectorAll('.cards')
 
-console.log(board);
-
-for (let i = 0; i < board.length; i++) {
-  board[i].addEventListener('click', flipCard)
-}
-
-function resume() {
-  firstCard.classList.toggle('flipCard');
-  secondCard.classList.toggle('flipCard');
+for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', flipCard)
 }
 
 function flipCard(e) {
-  if (correct) {
+  if (correct = true) {
     let element = e.currentTarget;
+    console.log(element)
     e.target.classList.toggle("flipCard");
 
-      if (counter = 1) {
+      if (counter === 1) {
         firstCard = element
         counter = 2;
 } 
 
-else if (counter = 2) {
+else if (counter === 2) {
   secondCard = element
-  let card1 = firstCard.className[0]
-  let card2 = secondCard.className[0]
+  console.log(secondCard)
+  let card1 = firstCard.className
+  console.log(card1)
+  let card2 = secondCard.className
+  console.log(card2)
 
   if (card1 === card2) {
     firstCard.removeEventListener('click', flipCard)
@@ -94,6 +91,11 @@ else if (counter = 2) {
   }
 }
 
+function resume() {
+  firstCard.classList.toggle('flipCard');
+  secondCard.classList.toggle('flipCard');
+}
+
 const startButton = document.querySelector('#start')
 
 const startGame = startButton.addEventListener('click', randomize,{once:true});
@@ -103,14 +105,14 @@ const resetButton = document.querySelector('#reset')
 const resetGame = resetButton.addEventListener('click', resetRandomize);
 
 function randomize() {
-  board.forEach(c => {
+  cards.forEach(c => {
     let r = Math.floor(Math.random() * 16);
     c.style.order = r;
 })
 }
 
 function resetRandomize() {
-  board.forEach(c => {
+  cards.forEach(c => {
     let r = Math.floor(Math.random() * 16);
     c.style.order = r;
 })
