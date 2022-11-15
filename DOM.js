@@ -48,16 +48,50 @@ function returnData(input) {
   return input >= 10 ? input : `0${input}`
 }
 
-//Flip function//
+let firstCard;
+let secondCard;
+let correct = true;
+let counter = 1;
 
-//const card = document.querySelector(".cards");
+const board = document.querySelector('.board')
 
-const board = document.querySelectorAll('.cards')
+console.log(board);
 
-board.forEach(card => card.addEventListener('click', flipCard));
+for (let i = 0; i < board.length; i++) {
+  board[i].addEventListener('click', flipCard)
+}
 
-function flipCard() {
-  this.classList.toggle("flipCard")
+function resume() {
+  firstCard.classList.toggle('flipCard');
+  secondCard.classList.toggle('flipCard');
+}
+
+function flipCard(e) {
+  if (correct) {
+    let element = e.currentTarget;
+    e.target.classList.toggle("flipCard");
+
+      if (counter = 1) {
+        firstCard = element
+        counter = 2;
+} 
+
+else if (counter = 2) {
+  secondCard = element
+  let card1 = firstCard.className[0]
+  let card2 = secondCard.className[0]
+
+  if (card1 === card2) {
+    firstCard.removeEventListener('click', flipCard)
+    secondCard.removeEventListener('click', flipCard)
+  }
+  else {
+    correct = false;
+    setTimeout(resume, 1000);
+  }
+  counter = 1;
+}
+  }
 }
 
 const startButton = document.querySelector('#start')
