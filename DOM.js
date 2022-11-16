@@ -78,61 +78,78 @@ for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', flipCard)
 }
 
-function flipCard(e) {
-  if (matchedCards.length === 8) {
-    return
+function flipCard (e){
+  //this function is repalcing what we had in lines 77-107. Utilizing the data-id's
+  //start the game with the first card not having a value, undefined
+  e.preventDefault()
+  console.log(e.target)
+  console.log(e.currentTarget)
+  if(e.currentTarget.getAttribute("data-matched") === "true"){
+    return; 
   }
-  let element = e.currentTarget;
-  console.log(matchedCards);
-  console.log(firstCard);
-  console.log(secondCard);
-  if(matchedCards.includes(element.classList[0])) {
-    return
+  else if(firstCard === undefined){
+    firstCard = e.currentTarget;
+    firstCard.classList.toggle("flipCard"); 
+  }
+  //have picked a card that was flipped over and the card I'm currently picking has not been macthed. 
+  else {
+    secondCard = e.currentTarget;
+    secondCard.classList.toggle("flipCard");
+    let firstCardId = firstCard.getAttribute("data-id");
+    let secondCardId = secondCard.getAttribute("data-id");
+    console.log(firstCard.id);
+    console.log(secondCard.id);
+    if(firstCard.id === secondCard.id){
+      console.log("clicked the same card");
+      secondCard.classList.toggle("flipCard");
+      firstCard = undefined; 
+      secondCard = undefined; 
+      return;
+    }
+    else if(secondCardId === firstCardId){
+      console.log("cards matched");
+      firstCard.setAttribute("data-matched", "true");
+      secondCard.setAttribute("data-matched", "true");
+      firstCard = undefined;
+      secondCard = undefined; 
+    }
+    else{
+      console.log("cards did not match")
+      firstCard.classList.toggle("flipCard");
+      secondCard.classList.toggle("flipCard");
+      firstCard = undefined;
+      secondCard = undefined; 
+    }
+  }
+    
+  
   }
 
-  if (firstCard) {
-    e.target.classList.toggle("flipCard");
-    secondCard = element.classList[0]
-    secondCardId = element.id;
-    let cardsMatch = firstCard === secondCard
-    if (cardsMatch) {
-      matchedCards.push(firstCard);
-      matchedCardsIds.push(firstCardId);
-      matchedCardsIds.push(secondCardId);
-      if(matchedCards.length === 8) {
-        stop();
-      }
-    }
-    else {
-      let selectedCard1 = Array.from(cards).find(card => card.id === firstCardId);
-      selectedCard1.classList.toggle("flipCard");
-      let selectedCard2 = Array.from(cards).find(card => card.id === secondCardId);
-      selectedCard2.classList.toggle("flipCard");
-    }
-    firstCard = null;
-    secondCard = null;
-    firstCardId = null;
-    secondCardId = null;
-    return
-  }
-    firstCard = element.classList[0]
-    firstCardId = element.id;
-    console.log(firstCardId);
-    e.target.classList.toggle("flipCard");
+
+
+function resume() {
+  firstCard.classList.toggle('flipCard');
+  secondCard.classList.toggle('flipCard');
 }
 
-function resetAllCards() {
-  const currentCards = document.querySelectorAll('.cards')
-  console.log(currentCards);
-  let flippedCards = Array.from(cards).filter(card => matchedCardsIds.includes(card.id));
-  for(const card of flippedCards) {
-    card.classList.toggle("flipCard");
-  }
-  if(firstCardId && ! secondCardId) {
-    let flipCard = Array.from(cards).find(card => card.id === firstCardId);
-    flipCard.classList.toggle("flipCard");
-  }
-  
-  matchedCards = [];
-  matchedCardsIds = [];
+const startButton = document.querySelector('#start')
+
+const startGame = startButton.addEventListener('click', randomize,{once:true});
+
+const resetButton = document.querySelector('#reset')
+
+const resetGame = resetButton.addEventListener('click', resetRandomize);
+
+function randomize() {
+  cards.forEach(c => {
+    let r = Math.floor(Math.random() * 16);
+    c.style.order = r;
+})
+}
+
+function resetRandomize() {
+  cards.forEach(c => {
+    let r = Math.floor(Math.random() * 16);
+    c.style.order = r;
+})
 }
