@@ -62,7 +62,6 @@ for (let i = 0; i < cards.length; i++) {
 function flipCard(e) {
   if (correct = true) {
     let element = e.currentTarget;
-    console.log(element)
     e.target.classList.toggle("flipCard");
 
       if (counter === 1) {
@@ -72,16 +71,22 @@ function flipCard(e) {
 
 else if (counter === 2) {
   secondCard = element
-  console.log(secondCard)
-  let card1 = firstCard.className
-  console.log(card1)
-  let card2 = secondCard.className
-  console.log(card2)
 
+  let card1 = firstCard.className
+
+  let card2 = secondCard.className
+
+  let card3 = firstCard.style.order
+
+  let card4 = secondCard.style.order
+console.log(card3)
+console.log(card4)
   if (card1 === card2) {
     firstCard.removeEventListener('click', flipCard)
     secondCard.removeEventListener('click', flipCard)
   }
+
+
   else {
     correct = false;
     setTimeout(resume, 1000);
@@ -95,6 +100,7 @@ function resume() {
   firstCard.classList.toggle('flipCard');
   secondCard.classList.toggle('flipCard');
 }
+
 
 const startButton = document.querySelector('#start')
 
