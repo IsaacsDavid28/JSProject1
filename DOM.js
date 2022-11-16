@@ -59,37 +59,54 @@ for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', flipCard)
 }
 
-function flipCard(e) {
-  if (correct = true) {
-    let element = e.currentTarget;
-    console.log(element)
-    e.target.classList.toggle("flipCard");
-
-      if (counter === 1) {
-        firstCard = element
-        counter = 2;
-} 
-
-else if (counter === 2) {
-  secondCard = element
-  console.log(secondCard)
-  let card1 = firstCard.className
-  console.log(card1)
-  let card2 = secondCard.className
-  console.log(card2)
-
-  if (card1 === card2) {
-    firstCard.removeEventListener('click', flipCard)
-    secondCard.removeEventListener('click', flipCard)
+function flipCard (e){
+  //this function is repalcing what we had in lines 77-107. Utilizing the data-id's
+  //start the game with the first card not having a value, undefined
+  e.preventDefault()
+  console.log(e.target)
+  console.log(e.currentTarget)
+  if(e.currentTarget.getAttribute("data-matched") === "true"){
+    return; 
   }
+  else if(firstCard === undefined){
+    firstCard = e.currentTarget;
+    firstCard.classList.toggle("flipCard"); 
+  }
+  //have picked a card that was flipped over and the card I'm currently picking has not been macthed. 
   else {
-    correct = false;
-    setTimeout(resume, 1000);
+    secondCard = e.currentTarget;
+    secondCard.classList.toggle("flipCard");
+    let firstCardId = firstCard.getAttribute("data-id");
+    let secondCardId = secondCard.getAttribute("data-id");
+    console.log(firstCard.id);
+    console.log(secondCard.id);
+    if(firstCard.id === secondCard.id){
+      console.log("clicked the same card");
+      secondCard.classList.toggle("flipCard");
+      firstCard = undefined; 
+      secondCard = undefined; 
+      return;
+    }
+    else if(secondCardId === firstCardId){
+      console.log("cards matched");
+      firstCard.setAttribute("data-matched", "true");
+      secondCard.setAttribute("data-matched", "true");
+      firstCard = undefined;
+      secondCard = undefined; 
+    }
+    else{
+      console.log("cards did not match")
+      firstCard.classList.toggle("flipCard");
+      secondCard.classList.toggle("flipCard");
+      firstCard = undefined;
+      secondCard = undefined; 
+    }
   }
-  counter = 1;
-}
+    
+  
   }
-}
+
+
 
 function resume() {
   firstCard.classList.toggle('flipCard');
