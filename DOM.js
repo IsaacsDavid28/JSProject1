@@ -7,12 +7,14 @@ let millisecond = 0;
 
 let cron;
 
-document.form_main.start.onclick = () => begin();
-document.form_main.reset.onclick = () => reset();
+// document.form_main.start.onclick = () => begin();
+ document.form_main.reset.onclick = () => reset();
 
 function begin() {
   cron = setInterval(() => { timer(); }, 10);
 }
+
+begin()
 
 function reset() {
   hour = 0;
@@ -23,6 +25,13 @@ function reset() {
   document.getElementById('minute').innerText = '00';
   document.getElementById('second').innerText = '00';
   document.getElementById('millisecond').innerText = '000';
+  resetAllCards();
+  randomize();
+  begin();
+}
+
+function stop() {
+  clearInterval(cron);
 }
 
 function timer() {
@@ -49,71 +58,81 @@ function returnData(input) {
 }
 
 let firstCard;
+let firstCardId;
 let secondCard;
-let correct = true;
-let counter = 1;
+let secondCardId;
+
+let matchedCards = [];
+let matchedCardsIds = [];
 
 const cards = document.querySelectorAll('.cards')
-
-for (let i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('click', flipCard)
-}
-
-function flipCard(e) {
-  if (correct = true) {
-    let element = e.currentTarget;
-    console.log(element)
-    e.target.classList.toggle("flipCard");
-
-      if (counter === 1) {
-        firstCard = element
-        counter = 2;
-} 
-
-else if (counter === 2) {
-  secondCard = element
-  console.log(secondCard)
-  let card1 = firstCard.className
-  console.log(card1)
-  let card2 = secondCard.className
-  console.log(card2)
-
-  if (card1 === card2) {
-    firstCard.removeEventListener('click', flipCard)
-    secondCard.removeEventListener('click', flipCard)
-  }
-  else {
-    correct = false;
-    setTimeout(resume, 1000);
-  }
-  counter = 1;
-}
-  }
-}
-
-function resume() {
-  firstCard.classList.toggle('flipCard');
-  secondCard.classList.toggle('flipCard');
-}
-
-const startButton = document.querySelector('#start')
-
-const startGame = startButton.addEventListener('click', randomize,{once:true});
-
-const resetButton = document.querySelector('#reset')
-
-const resetGame = resetButton.addEventListener('click', resetRandomize);
-
 function randomize() {
   cards.forEach(c => {
     let r = Math.floor(Math.random() * 16);
     c.style.order = r;
 })
 }
+randomize();
 
-function resetRandomize() {
-  cards.forEach(c => {
-    let r = Math.floor(Math.random() * 16);
-    c.style.order = r;
-})
+for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', flipCard)
+}
+
+function flipCard(e) {
+  if (matchedCards.length === 8) {
+    return
+  }
+  let element = e.currentTarget;
+  console.log(matchedCards);
+  console.log(firstCard);
+  console.log(secondCard);
+  if(matchedCards.includes(element.classList[0])) {
+    return
+  }
+
+  if (firstCard) {
+    e.target.classList.toggle("flipCard");
+    secondCard = element.classList[0]
+    secondCardId = element.id;
+    let cardsMatch = firstCard === secondCard
+    if (cardsMatch) {
+      matchedCards.push(firstCard);
+      matchedCardsIds.push(firstCardId);
+      matchedCardsIds.push(secondCardId);
+      if(matchedCards.length === 8) {
+        stop();
+      }
+    }
+    else {
+      let selectedCard1 = Array.from(cards).find(card => card.id === firstCardId);
+      selectedCard1.classList.toggle("flipCard");
+      let selectedCard2 = Array.from(cards).find(card => card.id === secondCardId);
+      selectedCard2.classList.toggle("flipCard");
+    }
+    firstCard = null;
+    secondCard = null;
+    firstCardId = null;
+    secondCardId = null;
+    return
+  }
+    firstCard = element.classList[0]
+    firstCardId = element.id;
+    console.log(firstCardId);
+    e.target.classList.toggle("flipCard");
+}
+
+function resetAllCards() {
+  const currentCards = document.querySelectorAll('.cards')
+  console.log(currentCards);
+  let flippedCards = Array.from(cards).filter(card => matchedCardsIds.includes(card.id));
+  for(const card of flippedCards) {
+    card.classList.toggle("flipCard");
+  }
+  if(firstCardId && ! secondCardId) {
+    let flipCard = Array.from(cards).find(card => card.id === firstCardId);
+    flipCard.classList.toggle("flipCard");
+  }
+  
+  matchedCards = [];
+  matchedCardsIds = [];
 }
