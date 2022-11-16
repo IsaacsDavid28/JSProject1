@@ -1,11 +1,22 @@
 "use strict";
 
+//selectors
+const cards = document.querySelectorAll('.cards')
+
+let firstCardId = 0;
+
+let matchedCardIds = [];
+
 let hour = 0;
 let minute = 0;
 let second = 0;
 let millisecond = 0;
 
 let cron;
+
+for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', flipCard)
+}
 
 // document.form_main.start.onclick = () => begin();
  document.form_main.reset.onclick = () => reset();
@@ -57,15 +68,6 @@ function returnData(input) {
   return input >= 10 ? input : `0${input}`
 }
 
-let firstCard;
-let firstCardId;
-let secondCard;
-let secondCardId;
-
-let matchedCards = [];
-let matchedCardsIds = [];
-
-const cards = document.querySelectorAll('.cards')
 function randomize() {
   cards.forEach(c => {
     let r = Math.floor(Math.random() * 16);
@@ -74,58 +76,55 @@ function randomize() {
 }
 randomize();
 
-for (let i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('click', flipCard)
-}
-
 function flipCard (e){
-  //this function is repalcing what we had in lines 77-107. Utilizing the data-id's
-  //start the game with the first card not having a value, undefined
   e.preventDefault()
-  console.log(e.target)
-  console.log(e.currentTarget)
-  if(e.currentTarget.getAttribute("data-matched") === "true"){
-    return; 
-  }
-  else if(firstCard === undefined){
-    firstCard = e.currentTarget;
-    firstCard.classList.toggle("flipCard"); 
-  }
-  //have picked a card that was flipped over and the card I'm currently picking has not been macthed. 
-  else {
-    secondCard = e.currentTarget;
-    secondCard.classList.toggle("flipCard");
-    let firstCardId = firstCard.getAttribute("data-id");
-    let secondCardId = secondCard.getAttribute("data-id");
-    console.log(firstCard.id);
-    console.log(secondCard.id);
-    if(firstCard.id === secondCard.id){
-      console.log("clicked the same card");
-      secondCard.classList.toggle("flipCard");
-      firstCard = undefined; 
-      secondCard = undefined; 
-      return;
+  
+  let currentCardId = e.currentTarget.id;
+  
+  if(!matchedCardIds.includes(currentCardId)){
+    if(firstCardId === 0){
+      console.log('first time flipping card')
+      e.currentTarget.classList.toggle('flipCard');
+      firstCardId = e.currentTarget.id;
     }
-    else if(secondCardId === firstCardId){
-      console.log("cards matched");
-      firstCard.setAttribute("data-matched", "true");
-      secondCard.setAttribute("data-matched", "true");
-      firstCard = undefined;
-      secondCard = undefined; 
+    else if(e.currentTarget.id == firstCardId){
+      console.log('Clicked the same card twice');
+      e.currentTarget.classList.toggle('flipCard');
+      firstCardId = 0;
     }
     else{
-      console.log("cards did not match")
-      firstCard.classList.toggle("flipCard");
-      secondCard.classList.toggle("flipCard");
-      firstCard = undefined;
-      secondCard = undefined; 
+
+      let firstCard = document.getElementById(firstCardId);
+      let secondCard = document.getElementById(e.currentTarget.id);
+
+      let firstCardPartnerId =  firstCard.getAttribute("data-partnerId");
+      let secondPartnerId = secondCard.getAttribute("data-partnerId");
+
+      secondCard.classList.toggle('flipCard');
+
+      //you have to force javascript to wait so that it actually shows the flip animation
+      setTimeout(function(){
+        if(firstCardPartnerId === secondPartnerId){
+          console.log('We have a match!')
+          matchedCardIds.push(firstCard.id);
+          matchedCardIds.push(secondCard.id);
+          firstCardId = 0;
+        }
+        else{
+          console.log('Not a match sorry!');
+          firstCard.classList.toggle('flipCard');
+          secondCard.classList.toggle('flipCard');
+          firstCardId = 0;
+        }
+      }, 1000);  
     }
   }
-    
-  
-  }
 
+}
 
+function flipCardDisplay(target){
+  target.classList.toggle('flipCard');
+}
 
 function resume() {
   firstCard.classList.toggle('flipCard');
