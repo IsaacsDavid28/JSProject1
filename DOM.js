@@ -36,9 +36,9 @@ function reset() {
   document.getElementById('minute').innerText = '00';
   document.getElementById('second').innerText = '00';
   document.getElementById('millisecond').innerText = '000';
-  resetAllCards();
   randomize();
   begin();
+  firstCardId = 0;
 }
 
 function stop() {
@@ -72,8 +72,11 @@ function randomize() {
   cards.forEach(c => {
     let r = Math.floor(Math.random() * 16);
     c.style.order = r;
+    c.classList.remove('flipCard')
 })
 }
+
+
 randomize();
 
 function flipCard (e){
@@ -131,24 +134,5 @@ function resume() {
   secondCard.classList.toggle('flipCard');
 }
 
-const startButton = document.querySelector('#start')
 
-const startGame = startButton.addEventListener('click', randomize,{once:true});
 
-const resetButton = document.querySelector('#reset')
-
-const resetGame = resetButton.addEventListener('click', resetRandomize);
-
-function randomize() {
-  cards.forEach(c => {
-    let r = Math.floor(Math.random() * 16);
-    c.style.order = r;
-})
-}
-
-function resetRandomize() {
-  cards.forEach(c => {
-    let r = Math.floor(Math.random() * 16);
-    c.style.order = r;
-})
-}
