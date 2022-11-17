@@ -128,14 +128,14 @@ function flipCard (e){
     }
   }
 
-function flipCardDisplay(target){
-  target.classList.toggle('flipCard');
-}
+// function flipCardDisplay(target){
+//   target.classList.toggle('flipCard');
+// }
 
-function resume() {
-  firstCard.classList.toggle('flipCard');
-  secondCard.classList.toggle('flipCard');
-}
+// function resume() {
+//   firstCard.classList.toggle('flipCard');
+//   secondCard.classList.toggle('flipCard');
+// }
 
 
 
