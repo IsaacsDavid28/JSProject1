@@ -113,9 +113,11 @@ function flipCard (e){
           matchedCardIds.push(secondCard.id);
           firstCardId = 0;
           console.log(matchedCardIds);
-          if(matchedCardIds.length === 16) {
+          if (matchedCardIds.length === 16) {
             stop();
             matchedCardIds.length = 0
+            alert(`Congratulations!! Can you beat your score? Try again`)
+          
         }}
         else{
           console.log('Not a match sorry!');
