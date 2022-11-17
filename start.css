@@ -34,6 +34,10 @@ input {
     border-radius: 10px;
 }
 
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 @media only screen and (min-device-width: 768px){
 
 
