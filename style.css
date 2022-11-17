@@ -8,6 +8,19 @@ body{
     transform: rotateY(180deg);
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.topLabels{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* MOBILE VIEW */
 
 @media screen and (max-width:480px){
@@ -66,7 +79,7 @@ input{
     padding: 5px;
     margin: 10px;
     transform-style: preserve-3d;
-    transition: all 3.2s ease;
+    transition: all 0.9s ease;
 }
 
 .card-1{
