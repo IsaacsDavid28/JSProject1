@@ -115,6 +115,7 @@ function flipCard (e){
           console.log(matchedCardIds);
           if(matchedCardIds.length === 16) {
             stop();
+            matchedCardIds.length = 0
         }}
         else{
           console.log('Not a match sorry!');
