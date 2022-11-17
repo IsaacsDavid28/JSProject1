@@ -25,7 +25,7 @@ function begin() {
   cron = setInterval(() => { timer(); }, 10);
 }
 
-begin()
+begin();
 
 function reset() {
   hour = 0;
@@ -112,18 +112,20 @@ function flipCard (e){
           matchedCardIds.push(firstCard.id);
           matchedCardIds.push(secondCard.id);
           firstCardId = 0;
-        }
+          console.log(matchedCardIds);
+          if(matchedCardIds.length === 16) {
+            stop();
+        }}
         else{
           console.log('Not a match sorry!');
           firstCard.classList.toggle('flipCard');
           secondCard.classList.toggle('flipCard');
           firstCardId = 0;
         }
-      }, 1000);  
+      }, 1000);       
+      } 
     }
   }
-
-}
 
 function flipCardDisplay(target){
   target.classList.toggle('flipCard');
